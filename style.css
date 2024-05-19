@@ -1,0 +1,346 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #48f2fb 50%, #4fe0c5 50%);
+  color: #fff;
+}
+
+::selection {
+  color: #141414;
+  background: #fff;
+}
+
+.wrapper {
+  width: 400px;
+  background: #1f1f1f;
+  border-radius: 7px;
+  border: 1px solid #fff;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+  position: relative; /* Needed for spinner and error container positioning */
+}
+
+.wrapper header {
+  display: flex;
+  font-size: 21px;
+  font-weight: 500;
+  color: #dbc025;
+  padding: 16px 15px;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+header i {
+  font-size: 0em;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.wrapper.active header i {
+  margin-left: 5px;
+  font-size: 30px;
+}
+
+.wrapper .input-part {
+  margin: 20px 25px 30px;
+}
+
+.wrapper.active .input-part {
+  display: none;
+}
+
+.input-part .info-txt {
+  display: none;
+  font-size: 17px;
+  text-align: center;
+  padding: 12px 10px;
+  border-radius: 7px;
+  margin-bottom: 15px;
+}
+
+.input-part .info-txt.error {
+  color: #ff5252;
+  display: block;
+  background: #1f1f1f;
+  border: 1px solid #ff5252;
+}
+
+.input-part .info-txt.pending {
+  color: #5362b8;
+  display: block;
+  background: #1f1f1f;
+  border: 1px solid #5362b8;
+}
+
+.input-part :where(input, button) {
+  width: 100%;
+  height: 55px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  border-radius: 7px;
+}
+
+.input-part input {
+  text-align: center;
+  padding: 0 15px;
+  border: 1px solid #333;
+}
+
+.input-part input:is(:focus, :valid) {
+  border: 2px solid #dbc025;
+}
+
+.input-part input::placeholder {
+  color: #666;
+}
+
+.input-part .separator {
+  height: 1px;
+  width: 100%;
+  margin: 25px 0;
+  background: #333;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.separator::before {
+  content: "or";
+  color: #666;
+  font-size: 19px;
+  padding: 0 15px;
+  background: #1f1f1f;
+}
+
+.input-part button {
+  color: #fff;
+  cursor: pointer;
+  background: #5362b8;
+  transition: 0.3s ease;
+}
+
+.input-part button:hover {
+  background: #525d9c;
+}
+
+.wrapper .weather-part {
+  display: none;
+  margin: 30px 0 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wrapper.active .weather-part {
+  display: flex;
+}
+
+.weather-part img {
+  max-width: 125px;
+}
+
+.weather-part .temp {
+  display: flex;
+  font-weight: 500;
+  font-size: 72px;
+}
+
+.weather-part .temp .numb {
+  font-weight: 600;
+}
+
+.weather-part .temp .deg {
+  font-size: 40px;
+  display: block;
+  margin: 10px 5px 0 0;
+}
+
+.weather-part .weather {
+  font-size: 21px;
+  text-align: center;
+  margin: -5px 20px 15px;
+}
+
+.weather-part .location {
+  display: flex;
+  font-size: 19px;
+  padding: 0 20px;
+  text-align: center;
+  margin-bottom: 30px;
+  align-items: flex-start;
+}
+
+.location i {
+  font-size: 22px;
+  margin: 4px 5px 0 0;
+}
+
+.weather-part .bottom-details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-top: 1px solid #333;
+}
+
+.bottom-details .column {
+  display: flex;
+  width: 100%;
+  padding: 15px 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.column i {
+  color: #43affc;
+  font-size: 40px;
+}
+
+.column.humidity {
+  border-left: 1px solid #333;
+}
+
+.column .details {
+  margin-left: 3px;
+}
+
+.details .temp,
+.humidity span {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: -3px;
+}
+
+.details .temp .deg {
+  margin: 0;
+  font-size: 17px;
+  padding: 0 2px 0 1px;
+}
+
+.column .details p {
+  font-size: 14px;
+  margin-top: -6px;
+}
+
+.humidity i {
+  font-size: 37px;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #fff;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.wrapper.pending .spinner {
+  display: block;
+}
+
+.error-message {
+  color: #ff5252;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    width: 90%;
+  }
+}
+
+.forecast-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+  }
+  
+  .forecast-item {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .forecast-item .day {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .forecast-item .weather-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+  
+  .forecast-item .temperature {
+    font-size: 16px;
+  }
+
+  .history-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #fff;
+    background-color: #5362b8;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .search-history {
+    display: none; /* Initially hide search history */
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: #1f1f1f;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999; /* Ensure search history is above other elements */
+  }
+  
+  .search-history.active {
+    display: block; /* Show search history when active */
+  }
+
+  .search-history ul.history-list {
+    list-style-type: none; /* Remove default bullet */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .search-history ul.history-list li {
+    margin-bottom: 5px; /* Add spacing between list items */
+  }
+  
